@@ -5,8 +5,12 @@ import (
 )
 
 func main() {
-	chan1 := make(chan interface{})
+	chan1 := make(chan [2]utils.Point)
+	defer close(chan1)
+	// 获取矩阵坐标
 	go utils.GetMatrix(chan1)
-	go utils.CutImg(<-chan1)
+	// 截图扫描区域
+	utils.CutImg(<-chan1)
+	//
 
 }
