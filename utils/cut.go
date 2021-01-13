@@ -5,7 +5,7 @@ import (
 )
 
 // CutImg 根据矩形坐标切图
-func CutImg(pointArr [2]Point) {
+func CutImg(pointArr interface{}) {
 	fmt.Println("cut", pointArr)
 
 }
