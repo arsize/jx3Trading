@@ -11,6 +11,7 @@ func main() {
 	go utils.GetMatrix(chan1)
 	// 截图扫描区域
 	utils.CutImg(<-chan1)
-	//
+	// 图片二值化处理
+	utils.OrcHandle()
 
 }
