@@ -1,5 +1,2 @@
-function greeter(person:string){
-    return "hello," + person
-}
+import * as robot from "robotjs"
 
-greeter("zyh")

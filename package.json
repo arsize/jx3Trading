@@ -1,0 +1,26 @@
+{
+  "name": "jx3Trading",
+  "version": "1.0.0",
+  "description": "剑网三自动买卖交易",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arsize/jx3Trading.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arsize/jx3Trading/issues"
+  },
+  "homepage": "https://github.com/arsize/jx3Trading#readme",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "robotjs": "^0.6.0"
+  }
+}
