@@ -24,12 +24,12 @@ func main() {
 
 }
 
-// 预处理：图像切片
+// 预处理：像素切片
 func pre() {
 	fmt.Println("正在预处理，请稍后...")
-	rect := Rectangle{Point{38, 520}, Point{143, 539}}
+	rect := Rectangle{Point{25, 576}, Point{113, 588}}
 	bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
-	step := 11
+	step := 10 //调整步长
 	width := rect.rb.x - rect.lt.x
 	height := rect.rb.y - rect.lt.y
 	for i := 0; i < width; i++ {
@@ -37,7 +37,6 @@ func pre() {
 	}
 	fmt.Println("预处理结束！")
 	defer robotgo.FreeBitmap(bitmap)
-
 }
 
 // 坐标定位点
