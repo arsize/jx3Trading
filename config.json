@@ -1,4 +1,9 @@
 {
+  "leftTopPos": {
+    "x": 35,
+    "y": 366
+  },
   "windowWidth": 10,
-  "windowHeight": 12
+  "windowHeight": 12,
+  "scanWidth":100
 }

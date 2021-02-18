@@ -19,8 +19,8 @@ type Rectangle struct {
 var pos Point
 
 func main() {
-	// location()
-	pre()
+	location()
+	// pre()
 
 }
 

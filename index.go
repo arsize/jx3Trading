@@ -4,6 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"jx3/jx"
+	"time"
+
+	"github.com/go-vgo/robotgo"
 )
 
 // Point 屏幕坐标点
@@ -16,10 +20,17 @@ type Rectangle struct {
 	lt, rb Point
 }
 
+// LeftTopPos 解析json
+type LeftTopPos struct {
+	X, Y int
+}
+
 // Config 配置文件
 type Config struct {
+	LeftTopPos   LeftTopPos
 	WindowWidth  int
 	WindowHeight int
+	ScanWidth    int
 }
 
 var config Config = Config{}
@@ -39,22 +50,20 @@ func init() {
 }
 
 func main() {
-	fmt.Println(config.WindowHeight)
+	fmt.Println(time.Now())
+	leftTop := Point{config.LeftTopPos.X, config.LeftTopPos.Y}
+	rightBottom := Point{config.LeftTopPos.X + config.WindowWidth, config.LeftTopPos.Y + config.WindowHeight}
+	rect := Rectangle{leftTop, rightBottom}
 
-	// fmt.Println(time.Now())
-	// rect := Rectangle{Point{35, 366}, Point{154, 378}}
-	// bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
-	// step := 10 //调整步长
-	// height := rect.rb.y - rect.lt.y
-	// width := rect.rb.x - rect.lt.x
-	// for i := 0; i < width; i++ {
-	// 	robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, step, height), fmt.Sprintf("./jx/target.png"))
-	// 	num := jx.Find("./jx/target.png", "./img/num", 5)
-	// 	if num != "" {
-	// 		fmt.Println(num)
-	// 	}
+	bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
+	for i := 0; i < config.ScanWidth; i++ {
+		robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, config.WindowWidth, config.WindowHeight), fmt.Sprintf("./jx/target.png"))
+		num := jx.Find("./jx/target.png", "./img/num", 5)
+		if num != "" {
+			fmt.Println(num)
+		}
 
-	// }
-	// fmt.Println(time.Now())
+	}
+	fmt.Println(time.Now())
 
 }
