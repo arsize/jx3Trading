@@ -1,11 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"jx3/jx"
-	"time"
-
-	"github.com/go-vgo/robotgo"
+	"io/ioutil"
 )
 
 // Point 屏幕坐标点
@@ -18,21 +16,40 @@ type Rectangle struct {
 	lt, rb Point
 }
 
-func main() {
-	fmt.Println(time.Now())
-	rect := Rectangle{Point{35, 366}, Point{154, 378}}
-	bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
-	step := 10 //调整步长
-	height := rect.rb.y - rect.lt.y
-	width := rect.rb.x - rect.lt.x
-	for i := 0; i < width; i++ {
-		robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, step, height), fmt.Sprintf("./jx/target.png"))
-		num := jx.Find("./jx/target.png", "./img/num", 5)
-		if num != "" {
-			fmt.Println(num)
-		}
+// Config 配置文件
+type Config struct {
+	WindowWidth  int
+	WindowHeight int
+}
 
+func main() {
+	fileData, err := ioutil.ReadFile("./config.json")
+	if err != nil {
+		fmt.Println("读取json文件失败", err)
+		return
 	}
-	fmt.Println(time.Now())
+	config := Config{}
+	err = json.Unmarshal(fileData, &config)
+	if err != nil {
+		fmt.Println("解析数据失败", err)
+		return
+	}
+	fmt.Println(config.WindowWidth)
+
+	// fmt.Println(time.Now())
+	// rect := Rectangle{Point{35, 366}, Point{154, 378}}
+	// bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
+	// step := 10 //调整步长
+	// height := rect.rb.y - rect.lt.y
+	// width := rect.rb.x - rect.lt.x
+	// for i := 0; i < width; i++ {
+	// 	robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, step, height), fmt.Sprintf("./jx/target.png"))
+	// 	num := jx.Find("./jx/target.png", "./img/num", 5)
+	// 	if num != "" {
+	// 		fmt.Println(num)
+	// 	}
+
+	// }
+	// fmt.Println(time.Now())
 
 }
