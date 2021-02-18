@@ -22,19 +22,24 @@ type Config struct {
 	WindowHeight int
 }
 
-func main() {
+var config Config = Config{}
+
+func init() {
 	fileData, err := ioutil.ReadFile("./config.json")
 	if err != nil {
 		fmt.Println("读取json文件失败", err)
 		return
 	}
-	config := Config{}
+	config = Config{}
 	err = json.Unmarshal(fileData, &config)
 	if err != nil {
 		fmt.Println("解析数据失败", err)
 		return
 	}
-	fmt.Println(config.WindowWidth)
+}
+
+func main() {
+	fmt.Println(config.WindowHeight)
 
 	// fmt.Println(time.Now())
 	// rect := Rectangle{Point{35, 366}, Point{154, 378}}
