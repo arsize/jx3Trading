@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 
 	"github.com/go-vgo/robotgo"
 )
@@ -18,22 +20,50 @@ type Rectangle struct {
 
 var pos Point
 
+// LeftTopPos 解析json
+type LeftTopPos struct {
+	X, Y int
+}
+
+// Config 配置文件
+type Config struct {
+	LeftTopPos   LeftTopPos
+	WindowWidth  int
+	WindowHeight int
+	ScanWidth    int
+}
+
+var config Config = Config{}
+
+func init() {
+	fileData, err := ioutil.ReadFile("../config.json")
+	if err != nil {
+		fmt.Println("读取json文件失败", err)
+		return
+	}
+	config = Config{}
+	err = json.Unmarshal(fileData, &config)
+	if err != nil {
+		fmt.Println("解析数据失败", err)
+		return
+	}
+}
+
 func main() {
-	location()
-	// pre()
+	// location()
+	pre()
 
 }
 
 // 预处理：像素切片
 func pre() {
 	fmt.Println("正在预处理，请稍后...")
-	rect := Rectangle{Point{25, 576}, Point{113, 588}}
+	leftTop := Point{config.LeftTopPos.X, config.LeftTopPos.Y}
+	rightBottom := Point{config.LeftTopPos.X + config.ScanWidth, config.LeftTopPos.Y + config.WindowHeight}
+	rect := Rectangle{leftTop, rightBottom}
 	bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
-	step := 10 //调整步长
-	width := rect.rb.x - rect.lt.x
-	height := rect.rb.y - rect.lt.y
-	for i := 0; i < width; i++ {
-		robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, step, height), fmt.Sprintf("../img/%d.png", i))
+	for i := 0; i < config.ScanWidth; i++ {
+		robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, config.WindowWidth, config.WindowHeight), fmt.Sprintf("../img/%d.png", i))
 	}
 	fmt.Println("预处理结束！")
 	defer robotgo.FreeBitmap(bitmap)

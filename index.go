@@ -52,13 +52,14 @@ func init() {
 func main() {
 	fmt.Println(time.Now())
 	leftTop := Point{config.LeftTopPos.X, config.LeftTopPos.Y}
-	rightBottom := Point{config.LeftTopPos.X + config.WindowWidth, config.LeftTopPos.Y + config.WindowHeight}
+	rightBottom := Point{config.LeftTopPos.X + config.ScanWidth, config.LeftTopPos.Y + config.WindowHeight}
 	rect := Rectangle{leftTop, rightBottom}
 
 	bitmap := robotgo.CaptureScreen(rect.lt.x, rect.lt.y, rect.rb.x, rect.rb.y)
 	for i := 0; i < config.ScanWidth; i++ {
 		robotgo.SaveBitmap(robotgo.GetPortion(bitmap, i, 0, config.WindowWidth, config.WindowHeight), fmt.Sprintf("./jx/target.png"))
-		num := jx.Find("./jx/target.png", "./img/num", 5)
+		num := jx.Find("./jx/target.png", "./img/zimu", 3)
+		// time.Sleep(time.Second)
 		if num != "" {
 			fmt.Println(num)
 		}
