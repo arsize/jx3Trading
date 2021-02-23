@@ -7,7 +7,7 @@ import (
 	"github.com/corona10/goimagehash"
 )
 
-// Compare 图片相似度比较
+// Compare 图片相似度比较2
 func Compare(path1, path2 string) int {
 	file1, _ := os.Open(path1)
 	file2, _ := os.Open(path2)
